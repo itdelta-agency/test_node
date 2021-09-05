@@ -19,11 +19,16 @@ export function useAuth () {
 function useProvideAuth () {
   const [user, setUser] = useState(null);
 
-  const signin = (email, password, cb) => {
-    return api.signin(email, password, user => {
-      setUser(user);
-      cb();
-    });
+  const signin = async (email, password) => {
+    const user = await api.signin(email, password);
+    setUser(user);
+    return user;
+  };
+
+  const signup = async (name, email, password) => {
+    const user = await api.signup(name, email, password);
+    setUser(user);
+    return user;
   };
 
   const signout = cb => {
@@ -36,6 +41,7 @@ function useProvideAuth () {
   return {
     user,
     signin,
+    signup,
     signout
   };
 }

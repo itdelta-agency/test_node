@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const router = require('./routes');
+const router = require('./routes/router');
+const apiRouter = require('./routes/apiRouter');
+
 const cors = require('cors')
 
 const app = express();
@@ -11,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/', router);
+app.use('/api/v1', apiRouter);
 
 app.use(function (req, res, next) {
   const err = new Error('Endpoint not found!');
